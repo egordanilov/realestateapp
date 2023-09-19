@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
 {
+    public function __invoke() {
+        $this->middleware('auth');
+    }
+
     public function destroy(Request $request) {
         Auth::logout();
         $request->session()->invalidate();

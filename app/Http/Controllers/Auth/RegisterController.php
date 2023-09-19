@@ -9,12 +9,16 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    public function __invoke() {
+        $this->middleware('guest');
+    }
+
     public function index() {
         return view('auth.register');
     }
 
     public function store(Request $request) {
-        
+
         //validate
         $validated = $request->validate([
             'name' => 'required|max:255',
@@ -33,14 +37,10 @@ class RegisterController extends Controller
             'email' => $validated['email'],
             'password' => $validated['password']
         ])) {
-            return redirect()->home();
+            return redirect()->route('dashboard');
         } else {
             return redirect()->back();
         }
-
-
-        //redirect
-
     }
 
 }
