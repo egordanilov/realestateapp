@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -20,8 +22,22 @@ class RegisterController extends Controller
             'password' => 'required|confirmed'
         ]);
         //create user
-        dd($request);
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password'])
+        ]);
+
         //login
+        if (auth()->attempt([
+            'email' => $validated['email'],
+            'password' => $validated['password']
+        ])) {
+            return redirect()->home();
+        } else {
+            return redirect()->back();
+        }
+
 
         //redirect
 
