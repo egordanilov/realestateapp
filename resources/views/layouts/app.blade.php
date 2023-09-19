@@ -11,8 +11,18 @@
             <a href="{{route('home')}}">Real Estate</a>
         </div>
         <div>
-            <a href="{{route('login')}}">Login</a>
-            <a href="{{route('register')}}">Register</a>
+            @guest
+                <a href="{{route('login')}}">Login</a>
+                <a href="{{route('register')}}">Register</a>
+            @endguest
+            
+            @auth
+                <a href="{{route('dashboard')}}">My Dashboard</a>
+                <form method="POST" action="{{route('logout')}}">
+                    @csrf
+                    <button type="submit">Logout</button>
+                </form>
+            @endauth
         </div>
     </header>
  @yield('content')
