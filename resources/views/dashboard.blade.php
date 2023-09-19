@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    Dashboard {{user()->name}}
+    Welcome, {{auth()->user()->name}}
 @endsection
